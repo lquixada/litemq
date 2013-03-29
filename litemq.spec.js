@@ -40,7 +40,7 @@ describe("LiteMQ", function() {
 				var
 					client1 = new LiteMQ.Client(),
 					client2 = new LiteMQ.Client(),
-					callbackA = function() { this.count=1; };
+					callbackA = function() { this.count=1; },
 					callbackB = function() { this.count=2; };
 
 				client1.sub('event', callbackA);
