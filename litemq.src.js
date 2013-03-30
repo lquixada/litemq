@@ -92,12 +92,23 @@ var LiteMQ = {
 };
 
 LiteMQ.Client = o.Class({
+	init: function (opt) {
+		this.name = 'anonymous';
+		debugger;
+		this._super(opt);
+	},
+
 	pub: function (evt, data) {
+		var msg = {};
+
 		if (typeof data === 'object') {
 			data = JSON.parse(JSON.stringify(data));
 		}
 
-		LiteMQ.trigger(evt, this, data);
+		msg.origin = this.name;
+		msg.body = data;
+
+		LiteMQ.trigger(evt, this, msg);
 	},
 
 	sub: function (evt, fn) {
