@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "grunt": "*",
-    "grunt-reload": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
     "o-jasmine": "*",
     "o-phantom": "*"
   }
