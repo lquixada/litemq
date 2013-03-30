@@ -94,7 +94,6 @@ var LiteMQ = {
 LiteMQ.Client = o.Class({
 	init: function (opt) {
 		this.name = 'anonymous';
-		debugger;
 		this._super(opt);
 	},
 
