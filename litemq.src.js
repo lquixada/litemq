@@ -6,45 +6,13 @@ var LiteMQ = {
 	detach: function (evt, origin, fn) {
 		if (evt) {
 			if (fn) {
-				this.detachListener(evt, origin, fn);
+				this._detachListener(evt, origin, fn);
 			} else {
-				this.detachEvent(evt, origin);
+				this._detachEvent(evt, origin);
 			}
 		} else {
-			this.detachAll(origin);
+			this._detachAll(origin);
 		}
-	},
-
-	detachAll: function (origin) {
-		var listeners = this._getListeners();
-
-		for (var evt in listeners) {
-			this.detachEvent(evt, origin);
-		}
-	},
-
-	detachEvent: function (evt, origin, fn) {
-		var result = [];
-
-		this._eachEventListener(evt, function (dest, func) {
-			if (origin !== dest) {
-				result.push([dest, func]);
-			}
-		});
-
-		this._setEventListeners(evt, result);
-	},
-
-	detachListener: function (evt, origin, fn) {
-		var result = [];
-
-		this._eachEventListener(evt, function (dest, func) {
-			if (!(origin === dest && fn === func)) {
-				result.push([dest, func]);
-			}
-		});
-
-		this._setEventListeners(evt, result);
 	},
 
 	trigger: function (evt, origin, data) {
@@ -56,12 +24,45 @@ var LiteMQ = {
 	},
 
 	// private
+	
 	_listeners: [],
 
 	_addEventListener: function (evt, listener) {
 		var listeners = this._getEventListeners(evt);
 
 		listeners.push(listener);
+	},
+
+	_detachAll: function (origin) {
+		var listeners = this._getListeners();
+
+		for (var evt in listeners) {
+			this._detachEvent(evt, origin);
+		}
+	},
+
+	_detachEvent: function (evt, origin, fn) {
+		var result = [];
+
+		this._eachEventListener(evt, function (dest, func) {
+			if (origin !== dest) {
+				result.push([dest, func]);
+			}
+		});
+
+		this._setEventListeners(evt, result);
+	},
+
+	_detachListener: function (evt, origin, fn) {
+		var result = [];
+
+		this._eachEventListener(evt, function (dest, func) {
+			if (!(origin === dest && fn === func)) {
+				result.push([dest, func]);
+			}
+		});
+
+		this._setEventListeners(evt, result);
 	},
 	
 	_eachEventListener: function (evt, callback) {
