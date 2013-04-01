@@ -99,7 +99,7 @@ describe("LiteMQ", function() {
 				client2.pub('event');
 
 				expect(client1.count).toBe(0);
-			});	
+			});
 		});
 	});
 });

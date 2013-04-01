@@ -17,11 +17,17 @@ var LiteMQ = {
 
 	trigger: function (evt, origin, data) {
 		this._filterEventListener(evt, function (dest, fn) {
-			if (dest !== origin) {
-				fn.call(dest, data);
-			}
+			try {
+				if (dest !== origin) {
+					fn.call(dest, data);
+				}
 
-			return true;
+				return true;
+			} catch (err) {
+				// if dest raises an error, it should be detached
+				// Hence, not returning true
+				console.log(err);
+			}
 		});
 	},
 
