@@ -11,13 +11,16 @@
     }
   ],
   "scripts": {
-    "test": "o-phantom"
+    "test": "grunt o:ci"
   },
-  "dependencies": {
+  "devDependencies": {
+    "phantomjs": "1.8.2-0",
     "grunt": "*",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-uglify": "*",
-    "o-jasmine": "*",
-    "o-phantom": "*"
+    "grunt-contrib-jasmine": "*",
+    "grunt-contrib-connect": "*",
+    "grunt-contrib-livereload": "*",
+    "grunt-regarde": "*"
   }
 }
