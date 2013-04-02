@@ -1,5 +1,0 @@
-title: "LiteMQ Spec Runner"
-js:
-  - lib/o.min.js
-  - litemq.src.js
-  - litemq.spec.js
