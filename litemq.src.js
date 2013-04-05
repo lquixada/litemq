@@ -116,6 +116,7 @@ var LiteMQ = {
 
 LiteMQ.Client = o.Class({
 	init: function (opt) {
+		this.bus = LiteMQ;
 		this.name = 'anonymous';
 		this._super(opt);
 	},
@@ -130,19 +131,19 @@ LiteMQ.Client = o.Class({
 		msg.origin = this.name;
 		msg.body = data;
 
-		LiteMQ.trigger(evt, this, msg);
+		this.bus.trigger(evt, this, msg);
 
 		return this;
 	},
 
 	sub: function (evt, fn) {
-		LiteMQ.attach(evt, this, fn);
+		this.bus.attach(evt, this, fn);
 		
 		return this;
 	},
 
 	unsub: function (evt, fn) {
-		LiteMQ.detach(evt, this, fn);
+		this.bus.detach(evt, this, fn);
 
 		return this;
 	}
