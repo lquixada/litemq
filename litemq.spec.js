@@ -18,20 +18,19 @@ describe("LiteMQ", function() {
 				this.counter = 1;
 			});
 			
-			client2.sub('event', function () {
-				this.counter = 1;
-			});
-
-			client2.pub('event');
+			client2
+				.sub('event', function () {
+					this.counter = 1;
+				})
+				.pub('event');
 
 			expect(client1.counter).toBe(1);
 			expect(client2.counter).not.toBe(1);
 		});
 
-		it("should send message", function () {
+		it("should send and receive message", function () {
 			var
 				message,
-				data = { user: 'John' },
 				client1 = new LiteMQ.Client(),
 				client2 = new LiteMQ.Client({name: 'Client2'});
 
@@ -39,10 +38,10 @@ describe("LiteMQ", function() {
 				message = msg;
 			});
 
-			client2.pub('event', data);
+			client2.pub('event', {user: 'John'});
 
 			expect(message.origin).toBe('Client2');
-			expect(message.body.user).toBe(data.user);
+			expect(message.body.user).toBe('John');
 		});
 
 		describe("unsubscribe", function () {
@@ -53,10 +52,10 @@ describe("LiteMQ", function() {
 					callbackA = function () { this.count=1; },
 					callbackB = function () { this.count=2; };
 
-				client1.sub('event', callbackA);
-				client1.sub('event', callbackB);
-
-				client1.unsub('event', callbackB);
+				client1
+					.sub('event', callbackA)
+					.sub('event', callbackB)
+					.unsub('event', callbackB);
 
 				client2.pub('event');
 
@@ -68,11 +67,11 @@ describe("LiteMQ", function() {
 					client1 = new LiteMQ.Client(),
 					client2 = new LiteMQ.Client();
 
-				client1.sub('event', function () {
-					this.count = 1;
-				});
-
-				client1.unsub('event');
+				client1
+					.sub('event', function () {
+						this.count = 1;
+					})
+					.unsub('event');
 
 				client2.pub('event');
 
@@ -86,15 +85,14 @@ describe("LiteMQ", function() {
 
 				client1.count = 0;
 
-				client1.sub('event', function () {
-					this.count = 1;
-				});
-				
-				client1.sub('event', function () {
-					this.count = 2;
-				});
-
-				client1.unsub();
+				client1
+					.sub('event', function () {
+						this.count = 1;
+					})
+					.sub('event', function () {
+						this.count = 2;
+					})
+					.unsub();
 
 				client2.pub('event');
 

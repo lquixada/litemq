@@ -115,13 +115,19 @@ LiteMQ.Client = o.Class({
 		msg.body = data;
 
 		LiteMQ.trigger(evt, this, msg);
+
+		return this;
 	},
 
 	sub: function (evt, fn) {
 		LiteMQ.attach(evt, this, fn);
+		
+		return this;
 	},
 
 	unsub: function (evt, fn) {
 		LiteMQ.detach(evt, this, fn);
+
+		return this;
 	}
 });
