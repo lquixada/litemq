@@ -46,7 +46,7 @@ module.exports = function ( grunt ) {
 				src: '*.src.js',
 				options: {
 					host: 'http://localhost:9001/',
-					vendor: 'lib/o.min.js',
+					vendor: 'vendor/o.min.js',
 					specs: '*.spec.js',
 					outfile: 'runner.html'
 				}
