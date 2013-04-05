@@ -1,4 +1,15 @@
-var LiteMQ = {};
+var LiteMQ = {
+	utils: {
+			convertToArray: function (object) {
+			if (Object.prototype.toString.call(object)==='[object Array]') {
+				return object;
+			}
+
+			return [object];
+		}
+	}
+};
+
 
 LiteMQ.Bus = o.Class({
 	attach: function (evt, dest, fn) {
@@ -118,6 +129,7 @@ LiteMQ.Bus = o.Class({
 
 LiteMQ.DefaultBus = new LiteMQ.Bus();
 
+
 LiteMQ.Client = o.Class({
 	init: function (opt) {
 		this.bus = LiteMQ.DefaultBus;
@@ -153,13 +165,3 @@ LiteMQ.Client = o.Class({
 		return this;
 	}
 });
-
-LiteMQ.utils = {
-	convertToArray: function (object) {
-		if (Object.prototype.toString.call(object)==='[object Array]') {
-			return object;
-		}
-
-		return [object];
-	}
-};
