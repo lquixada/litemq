@@ -63,6 +63,7 @@ describe("LiteMQ", function() {
 			client2.pub('event', {user: 'John'});
 
 			expect(message.origin).toBe('Client2');
+			expect(message.eventName).toBe('event');
 			expect(message.body.user).toBe('John');
 		});
 

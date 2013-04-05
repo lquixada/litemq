@@ -42,14 +42,16 @@ LiteMQ.Bus = o.Class({
 		this._listeners = {};
 	},
 
-	trigger: function (evt, origin, data) {
+	trigger: function (evt, origin, msg) {
 		var events = LiteMQ.utils.convertToArray(evt);
 
 		for (var i = 0; i < events.length; i++) {
+			msg.eventName = events[i];
+
 			this._filterEventListener(events[i], function (dest, fn) {
 				try {
 					if (dest !== origin) {
-						fn.call(dest, data);
+						fn.call(dest, msg);
 					}
 
 					return true;
