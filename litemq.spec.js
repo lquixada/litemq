@@ -15,17 +15,39 @@ describe("LiteMQ", function() {
 				client2 = new LiteMQ.Client();
 
 			client1.sub('event', function () {
-				this.counter = 1;
+				this.count = 1;
 			});
 			
 			client2
 				.sub('event', function () {
-					this.counter = 1;
+					this.count = 1;
 				})
 				.pub('event');
 
-			expect(client1.counter).toBe(1);
-			expect(client2.counter).not.toBe(1);
+			expect(client1.count).toBe(1);
+			expect(client2.count).not.toBe(1);
+		});
+
+		it("should subscribe to and publish multiple events", function () {
+			var
+				client1 = new LiteMQ.Client(),
+				client2 = new LiteMQ.Client();
+
+			client1.count = 0;
+			client1.sub(['event1', 'event2', 'event3'], function () {
+				this.count++;
+			});
+			
+			client2.pub(['event1', 'event3']);
+
+			expect(client1.count).toBe(2);
+
+			client1.unsub(['event1', 'event3']);
+
+			client2.pub(['event1', 'event3']);
+
+			// it must remain 2
+			expect(client1.count).toBe(2);
 		});
 
 		it("should send and receive message", function () {

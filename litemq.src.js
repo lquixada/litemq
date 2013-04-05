@@ -1,14 +1,24 @@
 var LiteMQ = {
 	attach: function (evt, dest, fn) {
-		this._addEventListener(evt, [dest, fn]);
+		var events = this._convertToArray(evt);
+
+		for (var i = 0; i < events.length; i++) {
+			this._addEventListener(events[i], [dest, fn]);
+		}
 	},
 
 	detach: function (evt, origin, fn) {
+		var events;
+
 		if (evt) {
-			if (fn) {
-				this._detachListener(evt, origin, fn);
-			} else {
-				this._detachEvent(evt, origin);
+			events = this._convertToArray(evt);
+			
+			for (var i = 0; i < events.length; i++) {
+				if (fn) {
+					this._detachListener(events[i], origin, fn);
+				} else {
+					this._detachEvent(events[i], origin);
+				}
 			}
 		} else {
 			this._detachAll(origin);
@@ -16,19 +26,23 @@ var LiteMQ = {
 	},
 
 	trigger: function (evt, origin, data) {
-		this._filterEventListener(evt, function (dest, fn) {
-			try {
-				if (dest !== origin) {
-					fn.call(dest, data);
-				}
+		var events = this._convertToArray(evt);
 
-				return true;
-			} catch (err) {
-				// if dest raises an error, it should be detached
-				// Hence, not returning true
-				console.log(err);
-			}
-		});
+		for (var i = 0; i < events.length; i++) {
+			this._filterEventListener(events[i], function (dest, fn) {
+				try {
+					if (dest !== origin) {
+						fn.call(dest, data);
+					}
+
+					return true;
+				} catch (err) {
+					// if dest raises an error, it should be detached
+					// Hence, not returning true
+					console.log(err);
+				}
+			});
+		}
 	},
 
 	// private
@@ -91,6 +105,14 @@ var LiteMQ = {
 
 	_getListeners: function () {
 		return this._listeners;
+	},
+
+	_convertToArray: function (object) {
+		if (Object.prototype.toString.call(object)==='[object Array]') {
+			return object;
+		}
+
+		return [object];
 	},
 
 	_setEventListeners: function (evt, listeners) {
