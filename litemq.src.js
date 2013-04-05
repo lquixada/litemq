@@ -1,6 +1,6 @@
 var LiteMQ = {
 	attach: function (evt, dest, fn) {
-		var events = this._convertToArray(evt);
+		var events = this.utils.convertToArray(evt);
 
 		for (var i = 0; i < events.length; i++) {
 			this._addEventListener(events[i], [dest, fn]);
@@ -11,7 +11,7 @@ var LiteMQ = {
 		var events;
 
 		if (evt) {
-			events = this._convertToArray(evt);
+			events = this.utils.convertToArray(evt);
 			
 			for (var i = 0; i < events.length; i++) {
 				if (fn) {
@@ -26,7 +26,7 @@ var LiteMQ = {
 	},
 
 	trigger: function (evt, origin, data) {
-		var events = this._convertToArray(evt);
+		var events = this.utils.convertToArray(evt);
 
 		for (var i = 0; i < events.length; i++) {
 			this._filterEventListener(events[i], function (dest, fn) {
@@ -107,13 +107,7 @@ var LiteMQ = {
 		return this._listeners;
 	},
 
-	_convertToArray: function (object) {
-		if (Object.prototype.toString.call(object)==='[object Array]') {
-			return object;
-		}
 
-		return [object];
-	},
 
 	_setEventListeners: function (evt, listeners) {
 		this._listeners[evt] = listeners;
@@ -153,3 +147,13 @@ LiteMQ.Client = o.Class({
 		return this;
 	}
 });
+
+LiteMQ.utils = {
+	convertToArray: function (object) {
+		if (Object.prototype.toString.call(object)==='[object Array]') {
+			return object;
+		}
+
+		return [object];
+	}
+};
