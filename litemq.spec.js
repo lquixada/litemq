@@ -1,6 +1,6 @@
 describe("LiteMQ", function() {
 	describe("Client", function() {
-		it("should have a name", function() {
+		it("has a name", function() {
 			var
 				client1 = new LiteMQ.Client({name: 'Tester'}),
 				client2 = new LiteMQ.Client();
@@ -9,7 +9,7 @@ describe("LiteMQ", function() {
 			expect(client2.name).toBe('anonymous');
 		});
 		
-		it("should subscribe to and publish an event", function () {
+		it("subscribes to and publish an event", function () {
 			var
 				client1 = new LiteMQ.Client(),
 				client2 = new LiteMQ.Client();
@@ -28,7 +28,7 @@ describe("LiteMQ", function() {
 			expect(client2.count).not.toBe(1);
 		});
 
-		it("should subscribe to and publish multiple events", function () {
+		it("subscribes to and publishes multiple events", function () {
 			var
 				client1 = new LiteMQ.Client(),
 				client2 = new LiteMQ.Client();
@@ -50,7 +50,7 @@ describe("LiteMQ", function() {
 			expect(client1.count).toBe(2);
 		});
 
-		it("should send and receive message", function () {
+		it("sends and receives message", function () {
 			var
 				message,
 				client1 = new LiteMQ.Client(),
@@ -66,7 +66,7 @@ describe("LiteMQ", function() {
 			expect(message.body.user).toBe('John');
 		});
 
-		describe("unsubscribe", function () {
+		describe("unsubscribes", function () {
 			it("listener", function () {
 				var
 					client1 = new LiteMQ.Client(),
@@ -121,6 +121,34 @@ describe("LiteMQ", function() {
 				expect(client1.count).toBe(0);
 			});
 		});
+
+		describe("Bus", function() {
+			it("can be different among clients", function() {
+					var
+						bus1 = new LiteMQ.Bus({name: 'Bus1'}),
+						bus2 = new LiteMQ.Bus({name: 'Bus2'}),
+						clientA = new LiteMQ.Client({bus: bus1}),
+						clientB = new LiteMQ.Client({bus: bus2}),
+						clientC = new LiteMQ.Client({bus: bus2});
+				
+					clientA.count = 0;
+					clientA.sub('event', function () {
+						this.count = 1;
+					});
+
+					clientB.count = 0;
+					clientB.sub('event', function () {
+						this.count = 1;
+					});
+
+					clientC.pub('event');
+
+					expect(clientA.count).toBe(0);
+					expect(clientB.count).toBe(1);
+			});
+		});
+		
 	});
+
 });
 

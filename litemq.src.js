@@ -1,6 +1,8 @@
-var LiteMQ = {
+var LiteMQ = {};
+
+LiteMQ.Bus = o.Class({
 	attach: function (evt, dest, fn) {
-		var events = this.utils.convertToArray(evt);
+		var events = LiteMQ.utils.convertToArray(evt);
 
 		for (var i = 0; i < events.length; i++) {
 			this._addEventListener(events[i], [dest, fn]);
@@ -11,7 +13,7 @@ var LiteMQ = {
 		var events;
 
 		if (evt) {
-			events = this.utils.convertToArray(evt);
+			events = LiteMQ.utils.convertToArray(evt);
 			
 			for (var i = 0; i < events.length; i++) {
 				if (fn) {
@@ -25,8 +27,12 @@ var LiteMQ = {
 		}
 	},
 
+	init: function () {
+		this._listeners = {};
+	},
+
 	trigger: function (evt, origin, data) {
-		var events = this.utils.convertToArray(evt);
+		var events = LiteMQ.utils.convertToArray(evt);
 
 		for (var i = 0; i < events.length; i++) {
 			this._filterEventListener(events[i], function (dest, fn) {
@@ -46,8 +52,6 @@ var LiteMQ = {
 	},
 
 	// private
-	
-	_listeners: {},
 
 	_addEventListener: function (evt, listener) {
 		var listeners = this._getEventListeners(evt);
@@ -107,17 +111,18 @@ var LiteMQ = {
 		return this._listeners;
 	},
 
-
-
 	_setEventListeners: function (evt, listeners) {
 		this._listeners[evt] = listeners;
 	}
-};
+});
+
+LiteMQ.DefaultBus = new LiteMQ.Bus();
 
 LiteMQ.Client = o.Class({
 	init: function (opt) {
-		this.bus = LiteMQ;
+		this.bus = LiteMQ.DefaultBus;
 		this.name = 'anonymous';
+
 		this._super(opt);
 	},
 
