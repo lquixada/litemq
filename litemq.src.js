@@ -1,6 +1,6 @@
 var LiteMQ = {
 	utils: {
-			convertToArray: function (object) {
+		convertToArray: function (object) {
 			if (Object.prototype.toString.call(object)==='[object Array]') {
 				return object;
 			}

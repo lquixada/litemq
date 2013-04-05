@@ -52,7 +52,7 @@
     "forin"         : false,  
     "immed"         : true,   
     "latedef"       : true,   
-    "loopfunc"      : false,  
+    "loopfunc"      : true,  
     "noarg"         : false,   
     "regexp"        : true,   
     "regexdash"     : false,  

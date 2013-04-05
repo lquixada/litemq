@@ -124,27 +124,27 @@ describe("LiteMQ", function() {
 
 		describe("Bus", function() {
 			it("can be different among clients", function() {
-					var
-						bus1 = new LiteMQ.Bus({name: 'Bus1'}),
-						bus2 = new LiteMQ.Bus({name: 'Bus2'}),
-						clientA = new LiteMQ.Client({bus: bus1}),
-						clientB = new LiteMQ.Client({bus: bus2}),
-						clientC = new LiteMQ.Client({bus: bus2});
-				
-					clientA.count = 0;
-					clientA.sub('event', function () {
-						this.count = 1;
-					});
+				var
+					bus1 = new LiteMQ.Bus({name: 'Bus1'}),
+					bus2 = new LiteMQ.Bus({name: 'Bus2'}),
+					clientA = new LiteMQ.Client({bus: bus1}),
+					clientB = new LiteMQ.Client({bus: bus2}),
+					clientC = new LiteMQ.Client({bus: bus2});
+			
+				clientA.count = 0;
+				clientA.sub('event', function () {
+					this.count = 1;
+				});
 
-					clientB.count = 0;
-					clientB.sub('event', function () {
-						this.count = 1;
-					});
+				clientB.count = 0;
+				clientB.sub('event', function () {
+					this.count = 1;
+				});
 
-					clientC.pub('event');
+				clientC.pub('event');
 
-					expect(clientA.count).toBe(0);
-					expect(clientB.count).toBe(1);
+				expect(clientA.count).toBe(0);
+				expect(clientB.count).toBe(1);
 			});
 		});
 		
