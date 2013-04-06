@@ -1,4 +1,5 @@
 var LiteMQ = {
+	version: '<version>',
 	debugMode: false,
 
 	utils: {
@@ -11,22 +12,30 @@ var LiteMQ = {
 		}
 	},
 
-	log: function (obj) {
-		if (typeof console !== 'undefined' && console.log) {
-			console.log(obj);
+	logger: {
+		log: function (obj) {
+			if (typeof console !== 'undefined' && console.log) {
+				console.log(obj);
+			}
+		},
+
+		debug: function (origin, msg) {
+			if (LiteMQ.debugMode) {
+				this.log([
+					'# DEBUG MODE ON',
+					'# Bus: '+origin.bus.name,
+					'# Origin: '+origin.name,
+					'# Event: '+msg.eventName,
+					'# Body: '
+				].join('\n'));
+				this.log(msg.body);
+				this.log('#########################');
+			}
 		}
 	},
 
 	debug: function (origin, msg) {
-		this.log([
-			'# DEBUG MODE ON',
-			'# Bus: '+origin.bus.name,
-			'# Origin: '+origin.name,
-			'# Event: '+msg.eventName,
-			'# Body: '
-		].join('\n'));
-		this.log(msg.body);
-		this.log('#########################');
+		this.logger.debug(origin, msg);
 	}
 };
 
@@ -69,9 +78,7 @@ LiteMQ.Bus = o.Class({
 		for (var i = 0; i < events.length; i++) {
 			msg.eventName = events[i];
 
-			if (LiteMQ.debugMode=true) {
-				LiteMQ.debug(origin, msg);
-			}
+			LiteMQ.debug(origin, msg);
 
 			this._filterEventListener(events[i], function (dest, fn) {
 				try {
