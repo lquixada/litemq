@@ -7,6 +7,12 @@ var LiteMQ = {
 
 			return [object];
 		}
+	},
+
+	log: function (obj) {
+		if (typeof console !== 'undefined' && console.log) {
+			console.log(obj);
+		}
 	}
 };
 
