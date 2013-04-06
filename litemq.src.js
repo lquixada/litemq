@@ -1,4 +1,6 @@
 var LiteMQ = {
+	debugMode: false,
+
 	utils: {
 		convertToArray: function (object) {
 			if (Object.prototype.toString.call(object)==='[object Array]') {
@@ -13,6 +15,18 @@ var LiteMQ = {
 		if (typeof console !== 'undefined' && console.log) {
 			console.log(obj);
 		}
+	},
+
+	debug: function (origin, msg) {
+		this.log([
+			'# DEBUG MODE ON',
+			'# Bus: '+origin.bus.name,
+			'# Origin: '+origin.name,
+			'# Event: '+msg.eventName,
+			'# Body: '
+		].join('\n'));
+		this.log(msg.body);
+		this.log('#########################');
 	}
 };
 
@@ -44,7 +58,8 @@ LiteMQ.Bus = o.Class({
 		}
 	},
 
-	init: function () {
+	init: function (opt) {
+		this._super(opt);
 		this._listeners = {};
 	},
 
@@ -53,6 +68,10 @@ LiteMQ.Bus = o.Class({
 
 		for (var i = 0; i < events.length; i++) {
 			msg.eventName = events[i];
+
+			if (LiteMQ.debugMode=true) {
+				LiteMQ.debug(origin, msg);
+			}
 
 			this._filterEventListener(events[i], function (dest, fn) {
 				try {
@@ -135,7 +154,7 @@ LiteMQ.Bus = o.Class({
 	}
 });
 
-LiteMQ.DefaultBus = new LiteMQ.Bus();
+LiteMQ.DefaultBus = new LiteMQ.Bus({name: 'DefaultBus'});
 
 
 LiteMQ.Client = o.Class({
