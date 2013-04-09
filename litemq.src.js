@@ -11,7 +11,17 @@ var LiteMQ = {
 			return [obj];
 		},
 
+		copy: function (obj) {
+			if (obj) {
+				return JSON.parse(JSON.stringify(obj));	
+			}
+
+			return obj;
+		},
+
 		each: function (arr, fn, context) {
+			arr = LiteMQ.convertToArray(arr);
+
 			for (var i = 0; i < arr.length; i++) {
 				fn.call(context || null, arr[i], i);
 			}
@@ -44,6 +54,10 @@ var LiteMQ = {
 		return this.utils.convertToArray(obj);
 	},
 
+	copy: function (obj) {
+		return this.utils.copy(obj);
+	},
+
 	debug: function (origin, msg) {
 		this.logger.debug(origin, msg);
 	},
@@ -55,21 +69,15 @@ var LiteMQ = {
 
 
 LiteMQ.Bus = o.Class({
-	attach: function (evt, dest, fn) {
-		var events = LiteMQ.convertToArray(evt);
-
-		LiteMQ.each(events, function (evt) {
+	attach: function (evts, dest, fn) {
+		LiteMQ.each(evts, function (evt) {
 			this._addEventListener(evt, [dest, fn]);
 		}, this);
 	},
 
-	detach: function (evt, origin, fn) {
-		var events;
-
-		if (evt) {
-			events = LiteMQ.convertToArray(evt);
-			
-			LiteMQ.each(events, function (evt) {
+	detach: function (evts, origin, fn) {
+		if (evts) {
+			LiteMQ.each(evts, function (evt) {
 				if (fn) {
 					this._detachListener(evt, origin, fn);
 				} else {
@@ -86,10 +94,8 @@ LiteMQ.Bus = o.Class({
 		this._listeners = {};
 	},
 
-	trigger: function (evt, origin, msg) {
-		var events = LiteMQ.convertToArray(evt);
-
-		LiteMQ.each(events, function (evt) {
+	trigger: function (evts, origin, msg) {
+		LiteMQ.each(evts, function (evt) {
 			msg.eventName = evt;
 
 			LiteMQ.debug(origin, msg);
@@ -225,25 +231,18 @@ LiteMQ.Client = o.Class({
 	},
 
 	pub: function (evt, data) {
-		var msg = {};
-
-		// make a copy
-		if (typeof data === 'object') {
-			data = JSON.parse(JSON.stringify(data));
-		}
-
-		msg.origin = this.name;
-		msg.body = data;
+		var msg = {
+			origin: this.name,
+			body: LiteMQ.copy(data)
+		};
 
 		this.bus.trigger(evt, this, msg);
 
 		return this;
 	},
 
-	sub: function (evt, fn) {
-		var events = LiteMQ.convertToArray(evt);
-
-		LiteMQ.each(events, function (evt) {
+	sub: function (evts, fn) {
+		LiteMQ.each(evts, function (evt) {
 			this.bus.attach(evt, this, fn);
 			this.enabled.push({evt: evt, fn: fn});	
 		}, this);
