@@ -67,6 +67,33 @@ describe("LiteMQ", function() {
 			expect(message.body.user).toBe('John');
 		});
 
+		it("can disable and enable a subscription", function() {
+			var
+				message,
+				client1 = new LiteMQ.Client(),
+				client2 = new LiteMQ.Client({name: 'Client2'});
+
+			client1.count = 0;
+			client1.sub('event', function () {
+				this.count++;
+			});
+
+			client2.pub('event');
+
+			client1.disable('event');
+
+			client2.pub('event');
+
+			expect(client1.count).toBe(1);
+
+			client1.enable('event');
+
+			client2.pub('event');
+
+			expect(client1.count).toBe(2);
+		});
+		
+
 		describe("unsubscribes", function () {
 			it("listener", function () {
 				var
