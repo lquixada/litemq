@@ -206,7 +206,7 @@ LiteMQ.Client = o.Class({
 				this.unsub(eventName, fn);
 				return true;
 			}
-		})
+		});
 	},
 
 	enable: function (evt) {
@@ -222,14 +222,14 @@ LiteMQ.Client = o.Class({
 				this.sub(eventName, fn);
 				return true;
 			}
-		})
+		});
 	},
 
 	transfer: function (target, source, fn) {
-		var
-			that = this,
-			// make a copy of target
-			target = this[target].slice();
+		var that = this;
+
+		// make a copy of target
+		target = this[target].slice();
 		
 		// Empty target to do the filtering
 		this[target] = [];
