@@ -187,6 +187,11 @@ LiteMQ.Client = o.Class({
 		// transfer from enabled to disabled those who satisfies
 		// the function
 		this.transfer('enabled', 'disabled', function (eventName, fn) {
+			if (!evt) {
+				this.unsub(eventName, fn);
+				return true;
+			}
+
 			if (eventName===evt) {
 				this.unsub(eventName, fn);
 				return true;
@@ -198,6 +203,11 @@ LiteMQ.Client = o.Class({
 		// transfer from disabled to enabled those who satisfies
 		// the function
 		this.transfer('disabled', 'enabled', function (eventName, fn) {
+			if (!evt) {
+				this.sub(eventName, fn);
+				return true;
+			}
+
 			if (eventName===evt) {
 				this.sub(eventName, fn);
 				return true;
