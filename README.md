@@ -21,7 +21,7 @@ client1.sub('some-event', function (msg) {
 });
 ```
 
-And put this somewhere else in yout code.
+And put this somewhere else in your code.
 
 ```javascript
 var json = {name: 'John', age: 23},
