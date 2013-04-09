@@ -70,20 +70,24 @@ var LiteMQ = {
 
 LiteMQ.Bus = o.Class({
 	attach: function (evts, dest, fn) {
+		var that = this;
+
 		LiteMQ.each(evts, function (evt) {
-			this._addEventListener(evt, [dest, fn]);
-		}, this);
+			that._addEventListener(evt, [dest, fn]);
+		});
 	},
 
 	detach: function (evts, origin, fn) {
+		var that = this;
+
 		if (evts) {
 			LiteMQ.each(evts, function (evt) {
 				if (fn) {
-					this._detachListener(evt, origin, fn);
+					that._detachListener(evt, origin, fn);
 				} else {
-					this._detachEvent(evt, origin);
+					that._detachEvent(evt, origin);
 				}
-			}, this);
+			});
 		} else {
 			this._detachAll(origin);
 		}
@@ -94,13 +98,19 @@ LiteMQ.Bus = o.Class({
 		this._listeners = {};
 	},
 
-	trigger: function (evts, origin, msg) {
+	trigger: function (evts, origin, data) {
+		var that = this;
+
 		LiteMQ.each(evts, function (evt) {
-			msg.eventName = evt;
+			var msg = {
+				origin: origin.name,
+				eventName: evt,
+				body: LiteMQ.copy(data)
+			};
 
 			LiteMQ.debug(origin, msg);
 
-			this._filterEventListener(evt, function (dest, fn) {
+			that._filterEventListener(evt, function (dest, fn) {
 				try {
 					if (dest !== origin) {
 						fn.call(dest, msg);
@@ -113,7 +123,7 @@ LiteMQ.Bus = o.Class({
 					console.log(err);
 				}
 			});
-		}, this);
+		});
 	},
 
 	// private
@@ -216,19 +226,21 @@ LiteMQ.Client = o.Class({
 	},
 
 	transfer: function (target, source, fn) {
-		// make a copy of target
-		var	target = this[target].slice();
+		var
+			that = this,
+			// make a copy of target
+			target = this[target].slice();
 		
 		// Empty target to do the filtering
 		this[target] = [];
 
 		LiteMQ.each(target, function (subs) {
-			if (fn.call(this, subs.evt, subs.fn)) {
-				this[source].push(subs);
+			if (fn.call(that, subs.evt, subs.fn)) {
+				that[source].push(subs);
 			} else {
-				this[target].push(subs);
+				that[target].push(subs);
 			}
-		}, this);
+		});
 	},
 
 	init: function (opt) {
@@ -241,21 +253,18 @@ LiteMQ.Client = o.Class({
 	},
 
 	pub: function (evt, data) {
-		var msg = {
-			origin: this.name,
-			body: LiteMQ.copy(data)
-		};
-
-		this.bus.trigger(evt, this, msg);
+		this.bus.trigger(evt, this, data);
 
 		return this;
 	},
 
 	sub: function (evts, fn) {
+		var that = this;
+
 		LiteMQ.each(evts, function (evt) {
-			this.bus.attach(evt, this, fn);
-			this.enabled.push({evt: evt, fn: fn});	
-		}, this);
+			that.bus.attach(evt, that, fn);
+			that.enabled.push({evt: evt, fn: fn});	
+		});
 		
 		return this;
 	},
