@@ -1,4 +1,5 @@
-# litemq
+# LiteMQ
+[![Build Status](https://travis-ci.org/lquixada/litemq.png?branch=master)](https://travis-ci.org/lquixada/litemq)
 
 ## Installation
 
