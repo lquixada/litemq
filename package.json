@@ -14,14 +14,8 @@
     "test": "grunt o:ci"
   },
   "devDependencies": {
-    "phantomjs": "1.8.2-0",
 		"grunt-cli": "*",
     "grunt": "*",
-    "grunt-contrib-jshint": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-jasmine": "*",
-    "grunt-contrib-connect": "*",
-    "grunt-contrib-livereload": "*",
-    "grunt-regarde": "*"
+    "grunt-o-bundle": "*"
   }
 }
