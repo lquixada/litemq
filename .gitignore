@@ -1,5 +1,6 @@
 .DS_Store
-node_modules/
-.grunt/
 /*.min.js
 runner.html
+.grunt/
+build/
+node_modules/
