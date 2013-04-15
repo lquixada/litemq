@@ -1,13 +1,18 @@
 {
   "name": "litemq",
   "version": "0.0.1",
+	"homepage": "https://github.com/lquixada/litemq",
   "author": {
     "name": "Leonardo Quixada"
+  },
+	"repository": {
+    "type": "git",
+    "url": "https://github.com/lquixada/litemq.git"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "undefined/blob/master/LICENSE-MIT"
+      "url": "https://github.com/lquixada/litemq/blob/master/LICENSE-MIT"
     }
   ],
   "scripts": {
