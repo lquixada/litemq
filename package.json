@@ -2,19 +2,13 @@
   "name": "litemq",
   "version": "0.0.1",
 	"homepage": "https://github.com/lquixada/litemq",
-  "author": {
-    "name": "Leonardo Quixada"
-  },
+  "author": "Leonardo T Quixada <lquixada@gmail.com>",
+	"description": "A light message-oriented middleware in Javascript",
 	"repository": {
     "type": "git",
     "url": "https://github.com/lquixada/litemq.git"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/lquixada/litemq/blob/master/LICENSE-MIT"
-    }
-  ],
+  "license": "MIT",
   "scripts": {
     "test": "grunt o:ci"
   },
