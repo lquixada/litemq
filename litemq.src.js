@@ -77,6 +77,10 @@ LiteMQ.Bus = o.Class({
 		});
 	},
 
+	clear: function () {
+		this._resetListeners();
+	},
+
 	detach: function (evts, origin, fn) {
 		var that = this;
 
@@ -186,6 +190,10 @@ LiteMQ.Bus = o.Class({
 
 	_setEventListeners: function (evt, listeners) {
 		this._listeners[evt] = listeners;
+	},
+
+	_resetListeners: function () {
+		this._listeners = {};
 	}
 });
 

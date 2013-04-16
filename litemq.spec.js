@@ -190,6 +190,23 @@ describe("LiteMQ", function() {
 		});
 
 		describe("Bus", function() {
+			it("clears all its listeners", function() {
+				var
+					bus = new LiteMQ.Bus(),
+					client1 = new LiteMQ.Client({bus: bus}),
+					client2 = new LiteMQ.Client({bus: bus});
+				
+				client1.count = 0;
+				client1.sub('event', function () {
+					this.count = 1;
+				});
+				
+				bus.clear();
+
+				client2.pub('event');
+
+				expect(client1.count).toBe(0);
+			});
 			
 			it("can be different among clients", function() {
 				var
