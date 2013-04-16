@@ -194,51 +194,31 @@ LiteMQ.DefaultBus = new LiteMQ.Bus({name: 'DefaultBus'});
 
 LiteMQ.Client = o.Class({
 	disable: function (evt) {
-		// transfer from enabled to disabled those who satisfies
-		// the function
-		this.transfer('enabled', 'disabled', function (eventName, fn) {
-			if (!evt) {
-				this.unsub(eventName, fn);
-				return true;
+		var that = this;
+
+		LiteMQ.each(this.listeners, function (listener) {
+			if (!listener.enabled) {
+				return;
 			}
 
-			if (eventName===evt) {
-				this.unsub(eventName, fn);
-				return true;
+			if (listener.evt===evt || !evt) {
+				listener.enabled = false;
+				that._detach(listener.evt, listener.fn);
 			}
 		});
 	},
 
 	enable: function (evt) {
-		// transfer from disabled to enabled those who satisfies
-		// the function
-		this.transfer('disabled', 'enabled', function (eventName, fn) {
-			if (!evt) {
-				this.sub(eventName, fn);
-				return true;
-			}
-
-			if (eventName===evt) {
-				this.sub(eventName, fn);
-				return true;
-			}
-		});
-	},
-
-	transfer: function (target, source, fn) {
 		var that = this;
 
-		// make a copy of target
-		target = this[target].slice();
-		
-		// Empty target to do the filtering
-		this[target] = [];
+		LiteMQ.each(this.listeners, function (listener) {
+			if (listener.enabled) {
+				return;
+			}
 
-		LiteMQ.each(target, function (subs) {
-			if (fn.call(that, subs.evt, subs.fn)) {
-				that[source].push(subs);
-			} else {
-				that[target].push(subs);
+			if (listener.evt===evt || !evt) {
+				listener.enabled = true;
+				that._attach(listener.evt, listener.fn);
 			}
 		});
 	},
@@ -248,8 +228,7 @@ LiteMQ.Client = o.Class({
 		this.name = 'anonymous';
 
 		this._super(opt);
-		this.enabled = [];
-		this.disabled = [];
+		this.listeners = [];
 	},
 
 	pub: function (evt, data) {
@@ -262,16 +241,26 @@ LiteMQ.Client = o.Class({
 		var that = this;
 
 		LiteMQ.each(evts, function (evt) {
-			that.bus.attach(evt, that, fn);
-			that.enabled.push({evt: evt, fn: fn});	
+			that._attach(evt, fn);
+			that.listeners.push({evt: evt, fn: fn, enabled: true});	
 		});
 		
 		return this;
 	},
 
 	unsub: function (evt, fn) {
-		this.bus.detach(evt, this, fn);
+		this._detach(evt, fn);
 
 		return this;
+	},
+
+	// private
+
+	_attach: function (evt, fn) {
+		this.bus.attach(evt, this, fn);	
+	},
+
+	_detach: function (evt, fn) {
+		this.bus.detach(evt, this, fn);	
 	}
 });

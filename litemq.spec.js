@@ -93,6 +93,13 @@ describe("LiteMQ", function() {
 			client2.pub('event');
 
 			expect(client1.count).toBe(2);
+
+			client1.disable('event');
+			client1.enable('event');
+
+			client2.pub('event');
+
+			expect(client1.count).toBe(3);
 		});
 		
 		it("can disable and enable all subscriptions", function() {
@@ -183,6 +190,7 @@ describe("LiteMQ", function() {
 		});
 
 		describe("Bus", function() {
+			
 			it("can be different among clients", function() {
 				var
 					bus1 = new LiteMQ.Bus({name: 'Bus1'}),
@@ -207,7 +215,6 @@ describe("LiteMQ", function() {
 				expect(clientB.count).toBe(1);
 			});
 		});
-		
 	});
 
 });
