@@ -162,14 +162,14 @@ client2.pub('some-event', 'text sample');
 
 All client's methods return the client itself for chaining purposes. For instance, this:
 
-```transcript
+```javascript
 client.pub('some-event');
 client.pub('other-event');
 ```
 
 can be written like this:
 
-```transcript
+```javascript
 client.pub('some-event').pub('other-event');
 ```
 
@@ -178,14 +178,14 @@ client.pub('some-event').pub('other-event');
 
 In any method you see an **events** argument, you can supply an array of strings. For instance, this:
 
-```transcript
+```javascript
 client.unsub('some-event');
 client.unsub('other-event');
 ```
 
 can be written like this:
 
-```transcript
+```javascript
 client.unsub(['some-event','other-event']);
 ```
 
