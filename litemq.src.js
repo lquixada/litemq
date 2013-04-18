@@ -115,17 +115,11 @@ LiteMQ.Bus = o.Class({
 			LiteMQ.debug(origin, msg);
 
 			that._filterEventListener(evt, function (dest, fn) {
-				try {
-					if (dest !== origin) {
-						fn.call(dest, msg);
-					}
-
-					return true;
-				} catch (err) {
-					// if dest raises an error, it should be detached
-					// Hence, not returning true
-					console.log(err);
+				if (dest !== origin) {
+					fn.call(dest, msg);
 				}
+
+				return true;
 			});
 		});
 	},
