@@ -1,8 +1,24 @@
 # LiteMQ [![Build Status](https://travis-ci.org/lquixada/litemq.png?branch=master)](https://travis-ci.org/lquixada/litemq)
 
-A light message-oriented middleware in Javascript.
+A light message-oriented middleware in Javascript based on Apache's ActiveMQ. LiteMQ is great for single-page apps since
+it promotes loosely coupling between modules.
 
-## Installation
+
+## Benefits
+
+* Easier to test (since it has fewer dependencies)
+* Easier to develop modules (since different developers can implement different modules at the same time)
+* Easier to maintain (since you're not dealing with big monolithic code)
+
+
+## Dependencies
+
+LiteMQ has only one dependency: [the o framework](https://github.com/lquixada/o). This is intentional since
+LiteMQ is designed to be extensible. If you disagree with the implementation you can extend the Client class
+and implement your own logic.
+
+
+## QuickStart
 
 Add these tags to your page:
 
@@ -10,8 +26,6 @@ Add these tags to your page:
 <script src="o.min.js"></script>
 <script src="litemq.min.js"></script>
 ```
-
-## QuickStart
 
 Put this somewhere in your code:
 
