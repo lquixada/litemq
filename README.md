@@ -37,11 +37,11 @@ Age: 23
 
 Subscribes to an event and when it happens executes the callback function
 
-Parameters:
-	**events** can be a string or an array of strings.
-	**callback** a function to be invoked when the event happens which receives a message with headers and body as argument.
+#### Parameters
+* **events** can be a string or an array of strings.
+* **callback** a function to be invoked when the event happens which receives a message with headers and body as argument.
 
-Examples:
+#### Examples
 ```javascript
 // Subscribes a listener to an event
 client.sub('some-event', function () {
@@ -54,15 +54,15 @@ client.sub('some-event', function () {
 
 Publishes an event to all clients that are listening to it with an optional message.
 
-Parameters:
-	**events** can be a string or an array of strings.
-	**message** can be anything: from boolean to an object (altough functions are not recommended).
+#### Parameters
+* **events** can be a string or an array of strings.
+* **message** can be anything: from boolean to an object (altough functions are not recommended).
 
 Examples:
 ```javascript
-client.pub('some-event');												 // Publishes an event with no message
-client.pub('some-event', 123);									 // Publishes a number as message
-client.pub('some-event', 'text');								 // Publishes a string as message
+client.pub('some-event');                        // Publishes an event with no message
+client.pub('some-event', 123);                   // Publishes a number as message
+client.pub('some-event', 'text');                // Publishes a string as message
 client.pub('some-event', {user:'John', age:23}); // Publishes an object as message
 ```
 
@@ -71,13 +71,13 @@ client.pub('some-event', {user:'John', age:23}); // Publishes an object as messa
 
 Unsubscribe an event and when it happens executes the callback function
 
-Parameters:
-	**events** can be a string or an array of strings.
+#### Parameters
+* **events** can be a string or an array of strings.
 	
-Examples:
+#### Examples
 ```javascript
-client.unsub();												// Unsubscribe all listeners of all client's events
-client.unsub('some-event');						// Unsubscribe all listeners of the specified client's event
+client.unsub();                       // Unsubscribe all listeners of all client's events
+client.unsub('some-event');           // Unsubscribe all listeners of the specified client's event
 client.unsub('some-event', listener); // Unsubscribe only the specified listener and event
 ```
 
@@ -86,9 +86,9 @@ client.unsub('some-event', listener); // Unsubscribe only the specified listener
 
 Disables all listeners temporally.
 
-Examples:
+#### Examples
 ```javascript
-client.disable('some-event');	// Disables all listeners attached to the event temporally
+client.disable('some-event'); // Disables all listeners attached to the event temporally
 ```
 
 
@@ -96,12 +96,12 @@ client.disable('some-event');	// Disables all listeners attached to the event te
 
 Enables event listeners that were disable.
 
-Parameters:
-	**events** can be a string or an array of strings.
+#### Parameters
+* **events** can be a string or an array of strings.
 
-Examples:
+#### Examples
 ```javascript
-client.enable('some-event');	// Enables all listeners attached to the event that has been disabled
+client.enable('some-event'); // Enables all listeners attached to the event that has been disabled
 ```
 
 
