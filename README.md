@@ -1,5 +1,4 @@
-# LiteMQ
-[![Build Status](https://travis-ci.org/lquixada/litemq.png?branch=master)](https://travis-ci.org/lquixada/litemq)
+# LiteMQ [![Build Status](https://travis-ci.org/lquixada/litemq.png?branch=master)](https://travis-ci.org/lquixada/litemq)
 
 ## Installation
 
@@ -9,7 +8,6 @@ Put this somewhere in your code.
 
 ```javascript
 client1 = new LiteMQ.Client();
-
 client1.sub('some-event', function (msg) {
 	console.log('Name: '+msg.body.name);
 	console.log('Age: '+msg.body.age);
@@ -20,7 +18,6 @@ And put this somewhere else in your code.
 
 ```javascript
 client2 = new LiteMQ.Client();
-
 client2.pub('some-event', {name: 'John', age: 23});
 ```
 
@@ -33,15 +30,29 @@ Age: 23
 
 ## Documentation
 
+### new LiteMQ.Client(options)
+
+Instantiates a client that will interact with the deafult LiteMQ bus.
+
+* **options** is an object whose properties will be copied to the instance.
+
+```javascript
+client = new LiteMQ.Client({name: 'FormUser', count: 0});
+client.name  // Outputs: 'FormUser'
+client.count // Outputs: 0
+```
+
+
 ### client.sub(events, callback)
 
-Subscribes to an event and when it happens executes the callback function.
+Subscribes to an event and, when it's triggered, executes the callback function.
 
 * **events** can be a string or an array of strings.
 * **callback** a function to be invoked when the event happens which receives a message with headers and body as argument.
 
 ```javascript
 // Subscribes a listener to an event
+client.count = 0;
 client.sub('some-event', function () {
 	this.count++; // "this" refers to the client object
 });
@@ -70,9 +81,9 @@ Unsubscribe an event and when it happens executes the callback function.
 * **events** can be a string or an array of strings.
 	
 ```javascript
-client.unsub();                       // Unsubscribe all listeners attached to all client's events
-client.unsub('some-event');           // Unsubscribe all listeners attached to the specified client's event
 client.unsub('some-event', listener); // Unsubscribe only the specified listener attached to the specified client's event
+client.unsub('some-event');           // Unsubscribe all listeners attached to the specified client's event
+client.unsub();                       // Unsubscribe all listeners attached to all client's events
 ```
 
 
@@ -132,7 +143,7 @@ client.pub(['some-event','other-event']);
 ```
 
 
-# Who's using LiteMQ
+## Who's using LiteMQ
 
 * [MyTravis Chrome extension] (https://chrome.google.com/webstore/detail/my-travis/ddlafmkcenhiahiikbgjemcbdengmjbg)
 * [Lightplayer plugin](https://github.com/lquixada/lightplayer)
