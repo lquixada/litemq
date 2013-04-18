@@ -121,7 +121,7 @@ client.unsub();                       // Unsubscribe all listeners attached to a
 
 ### client.disable(events)
 
-Disables all listeners temporally.
+Disables all listeners attached to **events** temporally.
 
 * **events** can be a string or an array of strings.
 
@@ -132,7 +132,7 @@ client.disable('some-event'); // Disables all listeners attached to the event te
 
 ### client.enable(events)
 
-Enables event listeners that were disable.
+Enables all listeners attached to **events** that were disabled.
 
 * **events** can be a string or an array of strings.
 
