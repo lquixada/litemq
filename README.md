@@ -35,9 +35,8 @@ Age: 23
 
 ### sub(events, callback)
 
-Subscribes to an event and when it happens executes the callback function
+Subscribes to an event and when it happens executes the callback function.
 
-#### Parameters
 * **events** can be a string or an array of strings.
 * **callback** a function to be invoked when the event happens which receives a message with headers and body as argument.
 
@@ -54,11 +53,10 @@ client.sub('some-event', function () {
 
 Publishes an event to all clients that are listening to it with an optional message.
 
-#### Parameters
 * **events** can be a string or an array of strings.
 * **message** can be anything: from boolean to an object (altough functions are not recommended).
 
-Examples:
+#### Examples
 ```javascript
 client.pub('some-event');                        // Publishes an event with no message
 client.pub('some-event', 123);                   // Publishes a number as message
@@ -69,9 +67,8 @@ client.pub('some-event', {user:'John', age:23}); // Publishes an object as messa
 
 ### unsub([events [,callback]]):
 
-Unsubscribe an event and when it happens executes the callback function
+Unsubscribe an event and when it happens executes the callback function.
 
-#### Parameters
 * **events** can be a string or an array of strings.
 	
 #### Examples
