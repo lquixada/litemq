@@ -1,10 +1,19 @@
 # LiteMQ [![Build Status](https://travis-ci.org/lquixada/litemq.png?branch=master)](https://travis-ci.org/lquixada/litemq)
 
+A light message-oriented middleware in Javascript.
+
 ## Installation
+
+Add these tags to your page:
+
+```html
+<script src="o.min.js"></script>
+<script src="litemq.min.js"></script>
+```
 
 ## QuickStart
 
-Put this somewhere in your code.
+Put this somewhere in your code:
 
 ```javascript
 client1 = new LiteMQ.Client();
@@ -14,7 +23,7 @@ client1.sub('some-event', function (msg) {
 });
 ```
 
-And put this somewhere else in your code.
+And put this somewhere else in the same code:
 
 ```javascript
 client2 = new LiteMQ.Client();
@@ -32,7 +41,7 @@ Age: 23
 
 ### new LiteMQ.Client(options)
 
-Instantiates a client that will interact with the deafult LiteMQ bus.
+Instantiates a client that will interact with the default LiteMQ bus.
 
 * **options** is an object whose properties will be copied to the instance.
 
@@ -108,6 +117,21 @@ Enables event listeners that were disable.
 client.enable('some-event'); // Enables all listeners attached to the event that has been disabled
 ```
 
+### Messages
+
+Everytime you publish an event with a message, this message is wrapped around by an object with some info.
+Suppose you have instantiated two clients: client1 and client2.
+
+```javascript
+client1.pub('some-event', function (msg) {
+	msg.eventName // Outputs: 'some-event' (the event's name - duh)
+	msg.origin    // Outputs: 'anonymous' (the publisher's name - 'anonymous' if one was not given!)
+	msg.body      // Outputs: 'text sample' (the actual message)
+});
+
+client2.pub('some-event', 'text sample');
+```
+
 
 ### Shortcuts
 
@@ -132,18 +156,18 @@ client.pub('some-event').pub('other-event');
 In any method you see an **events** argument, you can supply an array of strings. For instance, this:
 
 ```transcript
-client.pub('some-event');
-client.pub('other-event');
+client.unsub('some-event');
+client.unsub('other-event');
 ```
 
 can be written like this:
 
 ```transcript
-client.pub(['some-event','other-event']);
+client.unsub(['some-event','other-event']);
 ```
 
 
-## Who's using LiteMQ
+## Projects using LiteMQ
 
 * [MyTravis Chrome extension] (https://chrome.google.com/webstore/detail/my-travis/ddlafmkcenhiahiikbgjemcbdengmjbg)
 * [Lightplayer plugin](https://github.com/lquixada/lightplayer)
