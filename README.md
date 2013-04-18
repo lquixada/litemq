@@ -3,6 +3,15 @@
 A light message-oriented middleware in Javascript based on Apache's ActiveMQ. LiteMQ is great for single-page apps since
 it promotes loosely coupling between modules.
 
+## Topics
+
+* [Benefits](#benefits)
+* [Dependencies](#dependencies)
+* [QuickStart](#quickstart)
+* [Documentation](#documentation)
+* [Projects using LiteMQ](#projects-using-litemq)
+* [Credits](#credits)
+
 
 ## Benefits
 
