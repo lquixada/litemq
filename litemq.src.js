@@ -98,6 +98,7 @@ LiteMQ.Bus = o.Class({
 	},
 
 	init: function (opt) {
+		this.name = 'AnonymousBus';
 		this._super(opt);
 		this._listeners = {};
 	},
