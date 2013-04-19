@@ -53,8 +53,9 @@ describe("LiteMQ", function() {
 		it("sends and receives message", function () {
 			var
 				message,
-				client1 = new LiteMQ.Client(),
-				client2 = new LiteMQ.Client({name: 'Client2'});
+				bus = new LiteMQ.Bus({name: 'TestBus'}),
+				client1 = new LiteMQ.Client({bus: bus}),
+				client2 = new LiteMQ.Client({name: 'Client2', bus: bus});
 
 			client1.sub('event', function (msg) {
 				message = msg;
@@ -62,7 +63,8 @@ describe("LiteMQ", function() {
 
 			client2.pub('event', {user: 'John'});
 
-			expect(message.origin).toBe('Client2');
+			expect(message.busName).toBe('TestBus');
+			expect(message.originName).toBe('Client2');
 			expect(message.eventName).toBe('event');
 			expect(message.body.user).toBe('John');
 		});

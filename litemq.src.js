@@ -107,7 +107,8 @@ LiteMQ.Bus = o.Class({
 
 		LiteMQ.each(evts, function (evt) {
 			var msg = {
-				origin: origin.name,
+				busName: origin.bus.name,
+				originName: origin.name,
 				eventName: evt,
 				body: LiteMQ.copy(data)
 			};
