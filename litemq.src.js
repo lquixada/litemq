@@ -1,5 +1,5 @@
 var LiteMQ = {
-	version: '<version>',
+	version: '@VERSION',
 	debugMode: false,
 
 	utils: {
