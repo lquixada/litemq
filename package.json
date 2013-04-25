@@ -1,20 +1,20 @@
 {
-	"name": "litemq",
-	"version": "0.0.1",
-	"homepage": "https://github.com/lquixada/litemq",
-	"author": "Leonardo T Quixada <lquixada@gmail.com>",
-	"description": "A light message-oriented middleware in Javascript",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/lquixada/litemq.git"
-	},
-	"license": "MIT",
-	"scripts": {
-		"test": "grunt o:ci"
-	},
-	"devDependencies": {
-		"grunt-cli": "*",
-		"grunt": "*",
-		"grunt-o-bundle": "*"
-	}
+  "name": "litemq",
+  "version": "0.1.0",
+  "homepage": "https://github.com/lquixada/litemq",
+  "author": "Leonardo T Quixada <lquixada@gmail.com>",
+  "description": "A light message-oriented middleware in Javascript",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lquixada/litemq.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "grunt o:ci"
+  },
+  "devDependencies": {
+    "grunt-cli": "*",
+    "grunt": "*",
+    "grunt-o-bundle": "*"
+  }
 }
