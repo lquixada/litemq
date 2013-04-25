@@ -12,7 +12,7 @@ it promotes loosely coupling between modules.
 * **Projects using LiteMQ**
   * [MyTravis Chrome extension] (https://chrome.google.com/webstore/detail/my-travis/ddlafmkcenhiahiikbgjemcbdengmjbg)
   * [Lightplayer plugin](https://github.com/lquixada/lightplayer)
-* [Credits](#credits)
+* [Credits & License](#credits)
 
 
 ## Getting Started
@@ -58,7 +58,7 @@ Age: 23
 
 ## Dependencies
 
-LiteMQ has only one dependency: [the o framework](https://github.com/lquixada/o). This is intentional since
+LiteMQ has only one dependency: [the O framework](https://github.com/lquixada/o). This is intentional since
 LiteMQ is designed to be extensible. If you disagree with the implementation you can extend the Client class
 and implement your own logic.
 
