@@ -5,24 +5,26 @@ it promotes loosely coupling between modules.
 
 ## Topics
 
-* [Getting Started](#quickstart)
+* [Download](#download)
+* [Getting Started](#getting-started)
 * [Documentation](https://github.com/lquixada/litemq/wiki/Documentation)
 * [Benefits](#benefits)
 * [Dependencies](#dependencies)
 * **Projects using LiteMQ**
   * [MyTravis Chrome extension] (https://chrome.google.com/webstore/detail/my-travis/ddlafmkcenhiahiikbgjemcbdengmjbg)
   * [Lightplayer plugin](https://github.com/lquixada/lightplayer)
-* [Credits & License](#credits)
+* [Credits & License](#credits--license)
+
+
+## Download
+
+Warning: this script is still in beta!
+
+* [the minified version for production](http://d1962tarrzwft0.cloudfront.net/litemq-0.1.0.min.js)
+* [the uncompressed version for development](http://d1962tarrzwft0.cloudfront.net/litemq-0.1.0.js)
 
 
 ## Getting Started
-
-Add these tags to your page:
-
-```html
-<script src="o.min.js"></script>
-<script src="litemq.min.js"></script>
-```
 
 Put this somewhere in your code:
 
