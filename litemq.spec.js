@@ -2,8 +2,8 @@ describe("LiteMQ", function() {
 	describe("Client", function() {
 		it("has a name", function() {
 			var
-				client1 = new LiteMQ.Client({name: 'Tester'}),
-				client2 = new LiteMQ.Client();
+				client1 = LiteMQ.Client.$new({name: 'Tester'}),
+				client2 = LiteMQ.Client.$new();
 			
 			expect(client1.name).toBe('Tester');
 			expect(client2.name).toBe('anonymous');
@@ -11,8 +11,8 @@ describe("LiteMQ", function() {
 		
 		it("subscribes to and publish an event", function () {
 			var
-				client1 = new LiteMQ.Client(),
-				client2 = new LiteMQ.Client();
+				client1 = LiteMQ.Client.$new(),
+				client2 = LiteMQ.Client.$new();
 
 			client1.sub('event', function () {
 				this.count = 1;
@@ -30,8 +30,8 @@ describe("LiteMQ", function() {
 
 		it("subscribes to and publishes multiple events", function () {
 			var
-				client1 = new LiteMQ.Client(),
-				client2 = new LiteMQ.Client();
+				client1 = LiteMQ.Client.$new(),
+				client2 = LiteMQ.Client.$new();
 
 			client1.count = 0;
 			client1.sub(['event1', 'event2', 'event3'], function () {
@@ -53,9 +53,9 @@ describe("LiteMQ", function() {
 		it("sends and receives message", function () {
 			var
 				message,
-				bus = new LiteMQ.Bus({name: 'TestBus'}),
-				client1 = new LiteMQ.Client({bus: bus}),
-				client2 = new LiteMQ.Client({name: 'Client2', bus: bus});
+				bus = LiteMQ.Bus.$new({name: 'TestBus'}),
+				client1 = LiteMQ.Client.$new({bus: bus}),
+				client2 = LiteMQ.Client.$new({name: 'Client2', bus: bus});
 
 			client1.sub('event', function (msg) {
 				message = msg;
@@ -72,8 +72,8 @@ describe("LiteMQ", function() {
 		it("can disable and enable a subscription", function() {
 			var
 				message,
-				client1 = new LiteMQ.Client(),
-				client2 = new LiteMQ.Client({name: 'Client2'});
+				client1 = LiteMQ.Client.$new(),
+				client2 = LiteMQ.Client.$new({name: 'Client2'});
 
 			client1.count = 0;
 			client1.sub('event', function () {
@@ -107,8 +107,8 @@ describe("LiteMQ", function() {
 		it("can disable and enable all subscriptions", function() {
 			var
 				message,
-				client1 = new LiteMQ.Client(),
-				client2 = new LiteMQ.Client({name: 'Client2'});
+				client1 = LiteMQ.Client.$new(),
+				client2 = LiteMQ.Client.$new({name: 'Client2'});
 
 			client1.count = 0;
 			client1.sub('eventA', function () {
@@ -138,8 +138,8 @@ describe("LiteMQ", function() {
 		describe("unsubscribes", function () {
 			it("listener", function () {
 				var
-					client1 = new LiteMQ.Client(),
-					client2 = new LiteMQ.Client(),
+					client1 = LiteMQ.Client.$new(),
+					client2 = LiteMQ.Client.$new(),
 					callbackA = function () { this.count=1; },
 					callbackB = function () { this.count=2; };
 
@@ -155,8 +155,8 @@ describe("LiteMQ", function() {
 
 			it("event", function() {
 				var
-					client1 = new LiteMQ.Client(),
-					client2 = new LiteMQ.Client();
+					client1 = LiteMQ.Client.$new(),
+					client2 = LiteMQ.Client.$new();
 
 				client1
 					.sub('event', function () {
@@ -171,8 +171,8 @@ describe("LiteMQ", function() {
 			
 			it("everything", function() {
 				var
-					client1 = new LiteMQ.Client(),
-					client2 = new LiteMQ.Client();
+					client1 = LiteMQ.Client.$new(),
+					client2 = LiteMQ.Client.$new();
 
 				client1.count = 0;
 
@@ -194,9 +194,9 @@ describe("LiteMQ", function() {
 		describe("Bus", function() {
 			it("clears all its listeners", function() {
 				var
-					bus = new LiteMQ.Bus(),
-					client1 = new LiteMQ.Client({bus: bus}),
-					client2 = new LiteMQ.Client({bus: bus});
+					bus = LiteMQ.Bus.$new(),
+					client1 = LiteMQ.Client.$new({bus: bus}),
+					client2 = LiteMQ.Client.$new({bus: bus});
 				
 				client1.count = 0;
 				client1.sub('event', function () {
@@ -212,11 +212,11 @@ describe("LiteMQ", function() {
 			
 			it("can be different among clients", function() {
 				var
-					bus1 = new LiteMQ.Bus({name: 'Bus1'}),
-					bus2 = new LiteMQ.Bus({name: 'Bus2'}),
-					clientA = new LiteMQ.Client({bus: bus1}),
-					clientB = new LiteMQ.Client({bus: bus2}),
-					clientC = new LiteMQ.Client({bus: bus2});
+					bus1 = LiteMQ.Bus.$new({name: 'Bus1'}),
+					bus2 = LiteMQ.Bus.$new({name: 'Bus2'}),
+					clientA = LiteMQ.Client.$new({bus: bus1}),
+					clientB = LiteMQ.Client.$new({bus: bus2}),
+					clientC = LiteMQ.Client.$new({bus: bus2});
 			
 				clientA.count = 0;
 				clientA.sub('event', function () {

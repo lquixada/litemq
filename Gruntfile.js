@@ -8,7 +8,7 @@ module.exports = function (grunt) {
 				src: '*.src.js',
 				options: {
 					host: 'http://localhost:9001/',
-					vendor: 'vendor/o.min.js',
+					vendor: './vendor/pro.create-0.0.3.min.js',
 					specs: '*.spec.js',
 					outfile: 'runner.html'
 				}

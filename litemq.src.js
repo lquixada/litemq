@@ -68,7 +68,7 @@ var LiteMQ = {
 };
 
 
-LiteMQ.Bus = o.Class({
+LiteMQ.Bus = Class.$new({
 	attach: function (evts, dest, fn) {
 		var that = this;
 
@@ -97,7 +97,7 @@ LiteMQ.Bus = o.Class({
 		}
 	},
 
-	init: function (opt) {
+	_init: function (opt) {
 		this.name = 'AnonymousBus';
 		this._super(opt);
 		this._listeners = {};
@@ -193,10 +193,10 @@ LiteMQ.Bus = o.Class({
 	}
 });
 
-LiteMQ.DefaultBus = new LiteMQ.Bus({name: 'DefaultBus'});
+LiteMQ.DefaultBus = LiteMQ.Bus.$new({name: 'DefaultBus'});
 
 
-LiteMQ.Client = o.Class({
+LiteMQ.Client = Class.$new({
 	disable: function (evt) {
 		var that = this;
 
@@ -227,7 +227,7 @@ LiteMQ.Client = o.Class({
 		});
 	},
 
-	init: function (opt) {
+	_init: function (opt) {
 		this.bus = LiteMQ.DefaultBus;
 		this.name = 'anonymous';
 
