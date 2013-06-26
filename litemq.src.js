@@ -42,9 +42,9 @@ var LiteMQ = {
 					'# Bus: '+origin.bus.name,
 					'# Origin: '+origin.name,
 					'# Event: '+msg.eventName,
-					'# Body: '
+					'# Content: '
 				].join('\n'));
-				this.log(msg.body);
+				this.log(msg.content);
 				this.log('#########################');
 			}
 		}
@@ -111,7 +111,7 @@ LiteMQ.Bus = o.Class({
 				busName: origin.bus.name,
 				originName: origin.name,
 				eventName: evt,
-				body: LiteMQ.copy(data)
+				content: LiteMQ.copy(data)
 			};
 
 			LiteMQ.debug(origin, msg);

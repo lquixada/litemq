@@ -66,7 +66,7 @@ describe("LiteMQ", function() {
 			expect(message.busName).toBe('TestBus');
 			expect(message.originName).toBe('Client2');
 			expect(message.eventName).toBe('event');
-			expect(message.body.user).toBe('John');
+			expect(message.content.user).toBe('John');
 		});
 
 		it("can disable and enable a subscription", function() {
