@@ -244,10 +244,17 @@ LiteMQ.Client = o.Class({
 	sub: function (evts, fn) {
 		var that = this;
 
-		LiteMQ.each(evts, function (evt) {
-			that._attach(evt, fn);
-			that.listeners.push({evt: evt, fn: fn, enabled: true});	
-		});
+		if (typeof evts == 'object' && evts.constructor == Object) {
+			for (var key in evts) {
+				that._attach(key, evts[key]);
+				that.listeners.push({evt: key, fn: evts[key], enabled: true});	
+			}
+		} else {
+			LiteMQ.each(evts, function (evt) {
+				that._attach(evt, fn);
+				that.listeners.push({evt: evt, fn: fn, enabled: true});	
+			});
+		}
 		
 		return this;
 	},

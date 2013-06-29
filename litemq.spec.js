@@ -50,6 +50,35 @@ describe("LiteMQ", function() {
 			expect(client1.count).toBe(2);
 		});
 
+		it("subscribes to multiple callbacks", function () {
+			var
+				client1 = new LiteMQ.Client(),
+				client2 = new LiteMQ.Client();
+
+			client1.count = 0;
+			client1.sub({
+				eventA: function () {
+					this.count = 1;
+				},
+
+				eventB: function () {
+					this.count = 2;
+				},
+
+				eventC: function () {
+					this.count = 3;
+				}
+			});
+			
+			client2.pub('eventA');
+			
+			expect(client1.count).toBe(1);
+			
+			client2.pub('eventC');
+
+			expect(client1.count).toBe(3);
+		});
+
 		it("sends and receives message", function () {
 			var
 				message,
