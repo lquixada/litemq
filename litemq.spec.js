@@ -34,17 +34,17 @@ describe("LiteMQ", function() {
 				client2 = new LiteMQ.Client();
 
 			client1.count = 0;
-			client1.sub(['event1', 'event2', 'event3'], function () {
+			client1.sub(['eventA', 'eventB', 'eventC'], function () {
 				this.count++;
 			});
 			
-			client2.pub(['event1', 'event3']);
+			client2.pub(['eventA', 'eventC']);
 
 			expect(client1.count).toBe(2);
 
-			client1.unsub(['event1', 'event3']);
+			client1.unsub(['eventA', 'eventC']);
 
-			client2.pub(['event1', 'event3']);
+			client2.pub(['eventA', 'eventC']);
 
 			// it must remain 2
 			expect(client1.count).toBe(2);
